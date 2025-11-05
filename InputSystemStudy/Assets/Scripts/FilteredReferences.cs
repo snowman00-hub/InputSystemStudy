@@ -25,7 +25,7 @@ public class FilteredReferences : MonoBehaviour
         midMaterial.LoadAssetAsync().ToUniTask().Forget();
         lateMaterial.LoadAssetAsync().ToUniTask().Forget();
     }
-    // 테스트
+    // 테스트 2
 
     private void OnDisable()
     {
