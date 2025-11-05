@@ -9,29 +9,63 @@ public class CubeController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 rotateInput;
 
-    public void OnMove(InputValue value)
+    private Renderer rend;
+
+    private void Start()
     {
-        moveInput = value.Get<Vector2>();
+        rend = GetComponent<Renderer>();
     }
 
-    public void OnRotate(InputValue value)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        rotateInput = value.Get<Vector2>();
+        moveInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnRotate(InputAction.CallbackContext context)
+    {
+        rotateInput = context.ReadValue<Vector2>();
     }
 
     private void Update()
     {
-        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
-        transform.Translate(move * moveSpeed * Time.deltaTime);
+        Vector3 move = new Vector3(moveInput.x, moveInput.y,0);
+        transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
 
         float yaw = rotateInput.x * rotateSpeed * Time.deltaTime;
-        transform.Rotate(Vector3.up * yaw);
+        transform.Rotate(-Vector3.up * yaw, Space.World);
         float yaw2 = rotateInput.y * rotateSpeed * Time.deltaTime;
-        transform.Rotate(Vector3.left * yaw2);
+        transform.Rotate(-Vector3.left * yaw2, Space.World);
     }
 
-    public void OnColorChange1(InputValue value)
+    public void OnColorChange1(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            rend.material.color = Color.gray;
+        }
+    }
 
+    public void OnColorChange2(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            rend.material.color = Color.green;
+        }
+    }
+
+    public void OnColorChange3(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            rend.material.color = Color.red;
+        }
+    }
+
+    public void OnColorChange4(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            rend.material.color = Color.yellow;
+        }
     }
 }
